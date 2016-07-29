@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxc.autopage.base.mapper.AttachmentMapper">
+
+    <resultMap type="com.lxc.autopage.base.module.Attachment" id="attachmentMap">
+        <id property="id" column="ID"/>
+        <result property="fileName" column="FILE_NAME"/>
+        <result property="filePath" column="FILE_PATH"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="attachmentMap">
+        <![CDATA[
+            SELECT * from tb_insurer_bill_attachment
+            where id=#{id, jdbcType=INTEGER}
+        ]]>
+    </select>
+
+</mapper>

@@ -13,12 +13,14 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <!-- 装载非Controller类bean -->
-    <context:component-scan base-package="com.lxc">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+    <mvc:annotation-driven />
 
-    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
 
-    <context:property-placeholder location="classpath:/jdbc.properties" />
+    <!-- 导入数据源配置文件 -->
+    <import resource="datasource.xml" />
+
+    <!-- 装载Bean -->
+    <context:component-scan base-package="com.lxc"/>
+
 </beans>
