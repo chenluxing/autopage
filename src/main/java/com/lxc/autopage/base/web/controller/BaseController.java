@@ -43,7 +43,7 @@ public class BaseController {
     protected void initBinder(WebDataBinder binder, HttpServletRequest request) {
 
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
-        this.contextPath=request.getServletPath();
+        this.contextPath = request.getServletPath();
     }
 
     /**
