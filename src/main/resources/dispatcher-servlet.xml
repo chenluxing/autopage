@@ -68,9 +68,9 @@
         <property name="contentType" value="text/html; charset=UTF-8" />
         <property name="suffix" value=".ftl" />
         <property name="cache" value="true" />
-        <!--<property name="exposeRequestAttributes" value="false"/>
+        <property name="exposeRequestAttributes" value="false"/>
         <property name="exposeSessionAttributes" value="false"/>
-        <property name="exposeSpringMacroHelpers" value="true"/>-->
+        <property name="exposeSpringMacroHelpers" value="true"/>
     </bean>
 
     <bean id="multipartResolver"

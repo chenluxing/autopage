@@ -24,7 +24,6 @@ import java.util.Date;
  * Created by chenlx
  * on 2016/7/25.
  */
-@Controller
 public class BaseController {
 
     private static final Logger log = LoggerFactory.getLogger(BaseController.class);
