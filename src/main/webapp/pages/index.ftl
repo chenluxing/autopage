@@ -60,7 +60,7 @@
                 <td class="td_head">${element.displayName}</td>
                 <td class="td_body">
                     <#if element.elementType == 'INPUT'>
-                        <input name="${group.name}.${element.name}" type="text" class="input_text">
+                        <input name="${group.name}.${element.name}" type="text" class="input_text"></input>
                     <#elseif element.elementType == 'SELECT'>
                         <select name="${group.name}.${element.name}" class="select">
                         <!-- 读取子节点 -->
@@ -71,19 +71,19 @@
                         </#list>
                         </select>
                     <#elseif element.elementType == 'CHECKBOX'>
-                        <input name="${group.name}.${element.name}" type="checkbox" class="input_checkbox">${element.displayName}
+                        <input name="${group.name}.${element.name}" type="checkbox" class="input_checkbox">${element.displayName}</input>
                     </#if>
 
                     <!-- 读取从节点 -->
                     <#list element.slaveElements as slaveElement>
                         <#if slaveElement.elementType == 'INPUT'>
-                            <input name="${group.name}.${slaveElement.name}" type="text">
+                            <input name="${group.name}.${slaveElement.name}" type="text"></input>
                         <#elseif slaveElement.elementType == 'SELECT'>
                             <select name="${group.name}.${slaveElement.name}" class="select">
 
                             </select>
                         <#elseif slaveElement.elementType == 'CHECKBOX'>
-                            <input name="${group.name}.${slaveElement.name}" type="checkbox" class="input_checkbox">${slaveElement.displayName}
+                            <input name="${group.name}.${slaveElement.name}" type="checkbox" class="input_checkbox">${slaveElement.displayName}</input>
                         </#if>
                     </#list>
                 </td>

@@ -2,6 +2,7 @@ package com.lxc.autopage.base.module;
 
 import com.lxc.autopage.base.module.enums.ElementType;
 import com.lxc.autopage.base.module.enums.RelationType;
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,24 +11,17 @@ import java.util.List;
 /**
  * Created by admin on 2016/8/1.
  */
+@Alias("com.lxc.autopage.base.module.Element")
 public class Element implements Serializable {
 
     private Integer id;
+    private String code;
     private String name;
-    private String value;
-    private String displayName;
-    private ElementType elementType;
-    private Integer parentId;
+    private String desc;
+    private Integer elementType;
+    private Integer groupId;
     private int showSeq;
-    private List<Element> subElements = new ArrayList<>();
-
-    public void addSubElement(Element element){
-        subElements.add(element);
-    }
-
-    public void addSubElements(List<Element> elements){
-        subElements.addAll(elements);
-    }
+    private ElementHtml elementHtml;
 
     public Integer getId() {
         return id;
@@ -35,6 +29,14 @@ public class Element implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -45,36 +47,28 @@ public class Element implements Serializable {
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public ElementType getElementType() {
+    public Integer getElementType() {
         return elementType;
     }
 
-    public void setElementType(ElementType elementType) {
+    public void setElementType(Integer elementType) {
         this.elementType = elementType;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getGroupId() {
+        return groupId;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
     public int getShowSeq() {
@@ -85,11 +79,11 @@ public class Element implements Serializable {
         this.showSeq = showSeq;
     }
 
-    public List<Element> getSubElements() {
-        return subElements;
+    public ElementHtml getElementHtml() {
+        return elementHtml;
     }
 
-    public void setSubElements(List<Element> subElements) {
-        this.subElements = subElements;
+    public void setElementHtml(ElementHtml elementHtml) {
+        this.elementHtml = elementHtml;
     }
 }

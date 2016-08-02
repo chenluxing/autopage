@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lxc.autopage.base.mapper.ElementMapper">
+
+    <resultMap type="com.lxc.autopage.base.module.Element" id="elementMap">
+        <id property="id" column="ID"/>
+        <result property="groupId" column="GROUP_ID"/>
+        <result property="code" column="ELEMENT_CODE"/>
+        <result property="name" column="ELEMENT_NAME"/>
+        <result property="desc" column="ELEMENT_DESC"/>
+        <result property="elementType" column="ELEMENT_TYPE"/>
+    </resultMap>
+
+    <resultMap type="com.lxc.autopage.base.module.ElementHtml" id="elementHtmlMap">
+        <id property="id" column="ID"/>
+        <result property="value" column="EH_VALUE"/>
+        <result property="suffix" column="EH_SUFFIX"/>
+        <result property="elementId" column="ELEMENT_ID"/>
+        <result property="htmlType" column="HTML_TYPE"/>
+        <result property="relationType" column="RELATION_TYPE"/>
+        <result property="parentEhId" column="EH_PARENT_ID"/>
+        <result property="desc" column="DESC"/>
+    </resultMap>
+
+    <sql id="allColumns">
+        id,group_id,element_code,element_name,element_desc,element_type,element_etc,gmt_created,gmt_modified
+    </sql>
+
+    <select id="selectListByGroupId" resultMap="elementMap">
+        <![CDATA[
+            SELECT
+              id,group_id,element_code,element_name,element_desc,element_type,element_etc,gmt_created,gmt_modified
+            from tb_element
+            where group_id=#{groupId, jdbcType=INTEGER}
+        ]]>
+    </select>
+
+    <select id="selectElementHtmlListByElementId" resultMap="elementHtmlMap">
+      select id,eh_value,eh_suffix,element_id,html_type,relation_type,eh_parent_id,desc
+      from tb_element_html
+      where element_id=#{elementId, jdbcType=INTEGER}
+      order by relation_type
+    </select>
+
+</mapper>
