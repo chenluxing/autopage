@@ -1,7 +1,7 @@
 package com.lxc.autopage.base.mapper;
 
-import com.lxc.autopage.base.module.Element;
-import com.lxc.autopage.base.module.ElementHtml;
+import com.lxc.autopage.base.module.ElementHtmlPo;
+import com.lxc.autopage.base.module.ElementPo;
 
 import java.util.List;
 
@@ -15,13 +15,13 @@ public interface ElementMapper {
      * @param groupId
      * @return
      */
-    List<Element> selectListByGroupId(Integer groupId);
+    List<ElementPo> selectListByGroupId(Integer groupId);
 
     /**
      * 根据元素ID，查询html元素组
      * @param elementId
      * @return
      */
-    List<ElementHtml> selectElementHtmlListByElementId(Integer elementId);
+    List<ElementHtmlPo> selectElementHtmlListByElementId(Integer elementId);
 
 }

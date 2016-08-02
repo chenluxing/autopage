@@ -5,8 +5,16 @@ package com.lxc.autopage.base.module.enums;
  */
 public enum RelationType {
 
-    MASTER,
-    SLAVE,
-    SUB;
+    MASTER(0 , "主节点"),
+    SLAVE(1 , "从节点"),
+    SUB(2 , "子节点");
+
+    private Integer value;
+    private String name;
+
+    private RelationType(Integer value, String name){
+        this.value = value;
+        this.name = name;
+    }
 
 }

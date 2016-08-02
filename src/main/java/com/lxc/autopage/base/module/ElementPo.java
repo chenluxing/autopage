@@ -1,18 +1,14 @@
 package com.lxc.autopage.base.module;
 
-import com.lxc.autopage.base.module.enums.ElementType;
-import com.lxc.autopage.base.module.enums.RelationType;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by admin on 2016/8/1.
  */
-@Alias("com.lxc.autopage.base.module.Element")
-public class Element implements Serializable {
+@Alias("com.lxc.autopage.base.module.ElementPo")
+public class ElementPo implements Serializable {
 
     private Integer id;
     private String code;
@@ -21,7 +17,8 @@ public class Element implements Serializable {
     private Integer elementType;
     private Integer groupId;
     private int showSeq;
-    private ElementHtml elementHtml;
+
+
 
     public Integer getId() {
         return id;
@@ -79,11 +76,4 @@ public class Element implements Serializable {
         this.showSeq = showSeq;
     }
 
-    public ElementHtml getElementHtml() {
-        return elementHtml;
-    }
-
-    public void setElementHtml(ElementHtml elementHtml) {
-        this.elementHtml = elementHtml;
-    }
 }

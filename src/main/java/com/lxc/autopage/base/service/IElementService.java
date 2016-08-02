@@ -1,9 +1,7 @@
 package com.lxc.autopage.base.service;
 
-import com.lxc.autopage.base.module.Element;
-import org.springframework.stereotype.Service;
+import com.lxc.autopage.base.vo.ElementVo;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -15,13 +13,13 @@ public interface IElementService {
      * 查询分组信息
      * @return
      */
-    List<Element> getGroups();
+    List<ElementVo> getGroups();
 
     /**
      * 查询分组下的元素列表
      * @param groupId
      * @return
      */
-    List<Element> getListByGroupId(Integer groupId);
+    List<ElementVo> getListByGroupId(Integer groupId) throws Exception;
 
 }

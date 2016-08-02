@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lxc.autopage.base.mapper.ElementMapper">
 
-    <resultMap type="com.lxc.autopage.base.module.Element" id="elementMap">
+    <resultMap type="com.lxc.autopage.base.module.ElementPo" id="elementMap">
         <id property="id" column="ID"/>
         <result property="groupId" column="GROUP_ID"/>
         <result property="code" column="ELEMENT_CODE"/>
@@ -11,7 +11,7 @@
         <result property="elementType" column="ELEMENT_TYPE"/>
     </resultMap>
 
-    <resultMap type="com.lxc.autopage.base.module.ElementHtml" id="elementHtmlMap">
+    <resultMap type="com.lxc.autopage.base.module.ElementHtmlPo" id="elementHtmlMap">
         <id property="id" column="ID"/>
         <result property="value" column="EH_VALUE"/>
         <result property="suffix" column="EH_SUFFIX"/>
