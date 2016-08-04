@@ -17,4 +17,8 @@ public enum RelationType {
         this.name = name;
     }
 
+    public static RelationType getRelationType(Integer value){
+
+        return null;
+    }
 }

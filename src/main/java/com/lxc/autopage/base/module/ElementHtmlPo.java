@@ -14,12 +14,12 @@ import java.util.List;
 public class ElementHtmlPo implements Serializable{
 
     private Integer id;
-    private String code;
+    private String ehCode;
     private String ehValue;
     private String ehSuffix;
     private Integer elementId;
     private Integer htmlType;
-    private RelationType relationType;  // 主从类型、主子
+    private Integer relationType;  // 主从类型、主子
     private Integer ehParentId;
     private String desc;
 
@@ -31,12 +31,12 @@ public class ElementHtmlPo implements Serializable{
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getEhCode() {
+        return ehCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setEhCode(String ehCode) {
+        this.ehCode = ehCode;
     }
 
     public String getEhValue() {
@@ -71,11 +71,11 @@ public class ElementHtmlPo implements Serializable{
         this.htmlType = htmlType;
     }
 
-    public RelationType getRelationType() {
+    public Integer getRelationType() {
         return relationType;
     }
 
-    public void setRelationType(RelationType relationType) {
+    public void setRelationType(Integer relationType) {
         this.relationType = relationType;
     }
 

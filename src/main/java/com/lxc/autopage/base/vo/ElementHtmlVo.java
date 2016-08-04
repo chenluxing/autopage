@@ -28,12 +28,12 @@ public class ElementHtmlVo implements Serializable{
 
     public ElementHtmlVo copyPoValue(ElementHtmlPo po){
         this.id = po.getId();
-        this.code = po.getCode();
+        this.code = po.getEhCode();
         this.ehValue = po.getEhValue();
         this.ehSuffix = po.getEhSuffix();
         this.elementId = po.getElementId();
         this.htmlType = po.getHtmlType();
-        this.relationType = po.getRelationType();
+        this.relationType = RelationType.getRelationType(po.getRelationType());
         this.ehParentId = po.getEhParentId();
         this.desc = po.getDesc();
         return this;

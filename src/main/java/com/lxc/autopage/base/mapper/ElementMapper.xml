@@ -13,8 +13,9 @@
 
     <resultMap type="com.lxc.autopage.base.module.ElementHtmlPo" id="elementHtmlMap">
         <id property="id" column="ID"/>
-        <result property="value" column="EH_VALUE"/>
-        <result property="suffix" column="EH_SUFFIX"/>
+        <result property="ehCode" column="EH_CODE"/>
+        <result property="ehValue" column="EH_VALUE"/>
+        <result property="ehSuffix" column="EH_SUFFIX"/>
         <result property="elementId" column="ELEMENT_ID"/>
         <result property="htmlType" column="HTML_TYPE"/>
         <result property="relationType" column="RELATION_TYPE"/>
@@ -36,7 +37,7 @@
     </select>
 
     <select id="selectElementHtmlListByElementId" resultMap="elementHtmlMap">
-      select id,eh_value,eh_suffix,element_id,html_type,relation_type,eh_parent_id,desc
+      select id,eh_code,eh_value,eh_suffix,element_id,html_type,relation_type,eh_parent_id,desc
       from tb_element_html
       where element_id=#{elementId, jdbcType=INTEGER}
       order by relation_type
