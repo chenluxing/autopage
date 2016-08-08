@@ -1,6 +1,7 @@
 package com.lxc.autopage.base.service;
 
 import com.lxc.autopage.base.vo.ElementVo;
+import com.lxc.autopage.base.vo.GroupVo;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface IElementService {
      * 查询分组信息
      * @return
      */
-    List<ElementVo> getGroups();
+    List<GroupVo> getGroups() throws Exception;
 
     /**
      * 查询分组下的元素列表

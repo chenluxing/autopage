@@ -7,6 +7,7 @@ import com.lxc.autopage.base.module.enums.RelationType;
 import com.lxc.autopage.base.service.IElementService;
 import com.lxc.autopage.base.vo.ElementHtmlVo;
 import com.lxc.autopage.base.vo.ElementVo;
+import com.lxc.autopage.base.vo.GroupVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +34,20 @@ public class ElementServiceImpl implements IElementService{
      * 查询分组信息
      * @return
      */
-    public List<ElementVo> getGroups(){
-        List<ElementVo> resultList = null;
+    public List<GroupVo> getGroups() throws Exception{
+        List<GroupVo> resultList = null;
         List<ElementPo> elementPoList = elementMapper.selectListByGroupId(0);
         if (CollectionUtils.isNotEmpty(elementPoList)){
             resultList = new ArrayList<>();
-
+            GroupVo tempGroupVo = null;
+            List<ElementVo> tempList = null;
+            for (ElementPo po : elementPoList){
+                tempGroupVo = new GroupVo();
+                tempGroupVo.copyPoValue(po);
+                tempList = getListByGroupId(po.getId());
+                tempGroupVo.setElementVos(tempList);
+                resultList.add(tempGroupVo);
+            }
         }
         return resultList;
     }
@@ -85,7 +94,7 @@ public class ElementServiceImpl implements IElementService{
         ElementHtmlVo resultVo = null;
         if (CollectionUtils.isNotEmpty(elementHtmlPos)){
             ElementHtmlPo elementHtmlPo = elementHtmlPos.get(0);  // 获取第一个元素，并判断是否是主元素
-            if (elementHtmlPo != null && RelationType.MASTER.equals(elementHtmlPo.getRelationType())){
+            if (elementHtmlPo != null && RelationType.MASTER.getValue().equals(elementHtmlPo.getRelationType())){
                 resultVo = new ElementHtmlVo();
                 resultVo.copyPoValue(elementHtmlPo);
 

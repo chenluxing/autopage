@@ -12,9 +12,26 @@ public enum RelationType {
     private Integer value;
     private String name;
 
+    public Integer getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     private RelationType(Integer value, String name){
         this.value = value;
         this.name = name;
+    }
+
+    public static RelationType get(int value) {
+        for (RelationType relationType : values()) {
+            if (value == relationType.getValue()) {
+                return relationType;
+            }
+        }
+        throw new RuntimeException("relationType value not exists");
     }
 
     public static RelationType getRelationType(Integer value){

@@ -51,46 +51,31 @@
     <table style="width: 100%; background-color: #f1f1f1">
         <#list groups as group>
         <tr>
-            <td colspan="4" class="td_group">${group.displayName}</td>
+            <td colspan="4" class="td_group">${group.name}</td>
         </tr>
-            <#list group.subElements as element>
-            <#if element_index%2==0>
+            <#if (group.elementVos)??>
+            <#list group.elementVos as element>
+                <#if element_index%2==0>
                 <tr>
-            </#if>
-                <td class="td_head">${element.displayName}</td>
+                </#if>
+                <td class="td_head">${element.name}</td>
                 <td class="td_body">
-                    <#if element.elementType == 'INPUT'>
-                        <input name="${group.name}.${element.name}" type="text" class="input_text"></input>
-                    <#elseif element.elementType == 'SELECT'>
-                        <select name="${group.name}.${element.name}" class="select">
-                        <!-- 读取子节点 -->
-                        <#list element.subElements as subElement>
-                            <#if subElement.elementType == 'OPTION'>
-                                <option value="${subElement.value}">${subElement.displayName}</option>
-                            </#if>
-                        </#list>
-                        </select>
-                    <#elseif element.elementType == 'CHECKBOX'>
-                        <input name="${group.name}.${element.name}" type="checkbox" class="input_checkbox">${element.displayName}</input>
-                    </#if>
-
-                    <!-- 读取从节点 -->
-                    <#list element.slaveElements as slaveElement>
-                        <#if slaveElement.elementType == 'INPUT'>
-                            <input name="${group.name}.${slaveElement.name}" type="text"></input>
-                        <#elseif slaveElement.elementType == 'SELECT'>
-                            <select name="${group.name}.${slaveElement.name}" class="select">
-
-                            </select>
-                        <#elseif slaveElement.elementType == 'CHECKBOX'>
-                            <input name="${group.name}.${slaveElement.name}" type="checkbox" class="input_checkbox">${slaveElement.displayName}</input>
+                    <#if (element.elementHtml)??>
+                        <#if (element.elementHtml.htmlType)?? && element.elementHtml.htmlType == 2>
+                            <input name="${group.code}.${element.elementHtml.code}" type="text" class="input_text" /> ${(element.elementHtml.ehSuffix)!""}
+                        <#elseif (element.elementHtml.htmlType)?? && element.elementHtml.htmlType == 3>
+                            <select name="${group.code}.${element.elementHtml.code}" class="select input_text">
+                            </select> ${(element.elementHtml.ehSuffix)!""}
+                        <#elseif (element.elementHtml.htmlType)?? && element.elementHtml.htmlType == 4>
+                            <input name="${group.code}.${element.elementHtml.code}" type="checkbox"/> ${(element.elementHtml.ehSuffix)!""}
                         </#if>
-                    </#list>
+                    </#if>
                 </td>
-            <#if element_index%2==1 || element_index==element?size>
-            </tr>
-            </#if>
+                <#if element_index%2==1 || element_index==group.elementVos?size>
+                </tr>
+                </#if>
             </#list>
+            </#if>
         </#list>
     </table>
 

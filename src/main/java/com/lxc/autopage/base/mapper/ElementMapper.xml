@@ -20,7 +20,7 @@
         <result property="htmlType" column="HTML_TYPE"/>
         <result property="relationType" column="RELATION_TYPE"/>
         <result property="parentEhId" column="EH_PARENT_ID"/>
-        <result property="desc" column="DESC"/>
+        <result property="ehDesc" column="EH_DESC"/>
     </resultMap>
 
     <sql id="allColumns">
@@ -37,7 +37,7 @@
     </select>
 
     <select id="selectElementHtmlListByElementId" resultMap="elementHtmlMap">
-      select id,eh_code,eh_value,eh_suffix,element_id,html_type,relation_type,eh_parent_id,desc
+      select id,eh_code,eh_value,eh_suffix,element_id,html_type,relation_type,eh_parent_id,eh_desc
       from tb_element_html
       where element_id=#{elementId, jdbcType=INTEGER}
       order by relation_type

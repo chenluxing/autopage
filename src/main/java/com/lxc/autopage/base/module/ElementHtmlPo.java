@@ -21,7 +21,7 @@ public class ElementHtmlPo implements Serializable{
     private Integer htmlType;
     private Integer relationType;  // 主从类型、主子
     private Integer ehParentId;
-    private String desc;
+    private String ehDesc;
 
     public Integer getId() {
         return id;
@@ -87,11 +87,11 @@ public class ElementHtmlPo implements Serializable{
         this.ehParentId = ehParentId;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getEhDesc() {
+        return ehDesc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setEhDesc(String ehDesc) {
+        this.ehDesc = ehDesc;
     }
 }

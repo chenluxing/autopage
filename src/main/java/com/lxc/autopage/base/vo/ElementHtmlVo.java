@@ -35,7 +35,7 @@ public class ElementHtmlVo implements Serializable{
         this.htmlType = po.getHtmlType();
         this.relationType = RelationType.getRelationType(po.getRelationType());
         this.ehParentId = po.getEhParentId();
-        this.desc = po.getDesc();
+        this.desc = po.getEhDesc();
         return this;
     }
 
