@@ -107,9 +107,9 @@ public class ElementServiceImpl implements IElementService{
                         tempVo = new ElementHtmlVo();
                         tempVo.copyPoValue(tempPo);
                         // 遍历节点为从节点
-                        if (RelationType.SLAVE.equals(tempPo.getRelationType())){
+                        if (RelationType.SLAVE.equals(tempVo.getRelationType())){
                             slaveMap.put(tempPo.getId(), tempVo);
-                        }else if(RelationType.SUB.equals(tempPo.getRelationType())){  // 遍历节点为子节点
+                        }else if(RelationType.SUB.equals(tempVo.getRelationType())){  // 遍历节点为子节点
                             // 判断是主节点的子元素
                             if (tempPo.getEhParentId().equals(resultVo.getId())){
                                 resultVo.addSubElement(tempVo);

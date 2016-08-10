@@ -25,7 +25,7 @@ public enum RelationType {
         this.name = name;
     }
 
-    public static RelationType get(int value) {
+    public static RelationType get(Integer value) {
         for (RelationType relationType : values()) {
             if (value == relationType.getValue()) {
                 return relationType;
@@ -35,6 +35,13 @@ public enum RelationType {
     }
 
     public static RelationType getRelationType(Integer value){
+        if (value != null){
+            for (RelationType relationType : values()){
+                if (relationType != null && value.equals(relationType.getValue())){
+                    return relationType;
+                }
+            }
+        }
 
         return null;
     }

@@ -13,11 +13,12 @@
             vertical-align: middle;
         }
         .input_text{
-            width: 65%;
+            width: 200px;
             border: 1px solid #f4d3b3;
             line-height: 25px;
             height: 25px;
             padding-left: 2%;
+            margin-top: 5px;
         }
         .input_checkbox{
             vertical-align: middle;
@@ -27,6 +28,7 @@
             min-width: 100px;
             line-height: 25px;
             height: 25px;
+            width: 210px;
         }
         .td_group{
             color: #7d7268;
@@ -65,10 +67,26 @@
                             <input name="${group.code}.${element.elementHtml.code}" type="text" class="input_text" /> ${(element.elementHtml.ehSuffix)!""}
                         <#elseif (element.elementHtml.htmlType)?? && element.elementHtml.htmlType == 3>
                             <select name="${group.code}.${element.elementHtml.code}" class="select input_text">
+
                             </select> ${(element.elementHtml.ehSuffix)!""}
                         <#elseif (element.elementHtml.htmlType)?? && element.elementHtml.htmlType == 4>
                             <input name="${group.code}.${element.elementHtml.code}" type="checkbox"/> ${(element.elementHtml.ehSuffix)!""}
                         </#if>
+
+                        <!-- 兄弟节点 -->
+                        <#if (element.elementHtml.slaveElements)??>
+                            <#list element.elementHtml.slaveElements as slaveElement>
+                                <#if (slaveElement.htmlType)?? && slaveElement.htmlType == 2>
+                                    <input name="${group.code}.${slaveElement.code}" type="text" class="input_text" /> ${(slaveElement.ehSuffix)!""}
+                                <#elseif (slaveElement.htmlType)?? && slaveElement.htmlType == 3>
+                                    <select name="${group.code}.${slaveElement.code}" class="select input_text">
+                                    </select> ${(slaveElement.ehSuffix)!""}
+                                <#elseif (slaveElement.htmlType)?? && slaveElement.htmlType == 4>
+                                    <input name="${group.code}.${slaveElement.code}" type="checkbox"/> ${(slaveElement.ehSuffix)!""}
+                                </#if>
+                            </#list>
+                        </#if>
+
                     </#if>
                 </td>
                 <#if element_index%2==1 || element_index==group.elementVos?size>
