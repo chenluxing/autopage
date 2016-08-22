@@ -1,10 +1,11 @@
 package com.lxc.autopage.base.service.impl;
 
 import com.lxc.autopage.base.mapper.ElementMapper;
+import com.lxc.autopage.base.module.ElementHtmlGroupPo;
 import com.lxc.autopage.base.module.ElementHtmlPo;
 import com.lxc.autopage.base.module.ElementPo;
-import com.lxc.autopage.base.module.enums.RelationType;
 import com.lxc.autopage.base.service.IElementService;
+import com.lxc.autopage.base.vo.ElementHtmlGroupVo;
 import com.lxc.autopage.base.vo.ElementHtmlVo;
 import com.lxc.autopage.base.vo.ElementVo;
 import com.lxc.autopage.base.vo.GroupVo;
@@ -15,9 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by admin on 2016/8/1.
@@ -62,19 +61,18 @@ public class ElementServiceImpl implements IElementService{
         List<ElementPo> elements = elementMapper.selectListByGroupId(groupId);
         if (CollectionUtils.isNotEmpty(elements)){
             resultList = new ArrayList<>();
-            List<ElementHtmlPo> htmls = null;
-            ElementHtmlVo elementHtml = null;
+            List<ElementHtmlGroupVo> ehGroupVoList = null;
             ElementVo evo = null;
             try{
+                // 遍历元素头对象，组装元素体
                 for (ElementPo elementPo : elements){
                     evo = new ElementVo();
                     evo.copyPoValue(elementPo);
-                    htmls = elementMapper.selectElementHtmlListByElementId(elementPo.getId());
-                    elementHtml = convertListToElement(htmls);
-                    if (elementHtml != null){
-                        evo.setElementHtml(elementHtml);
+                    ehGroupVoList = getElementHtmlVoListByElementId(elementPo.getId());
+                    if (ehGroupVoList != null){
+                        evo.setElementHtmlGroupVoList(ehGroupVoList);
+                        resultList.add(evo);
                     }
-                    resultList.add(evo);
                 }
             }catch (Exception ex){
                 logger.error("获取分组下元素数据异常，分组ID：", groupId);
@@ -86,46 +84,34 @@ public class ElementServiceImpl implements IElementService{
     }
 
     /**
-     * 将一个html元素组转换成元素对象
-     * @param elementHtmlPos
+     * 获取元素的元素体
+     * @param elementId
      * @return
      */
-    private ElementHtmlVo convertListToElement(List<ElementHtmlPo> elementHtmlPos) throws Exception{
-        ElementHtmlVo resultVo = null;
-        if (CollectionUtils.isNotEmpty(elementHtmlPos)){
-            ElementHtmlPo elementHtmlPo = elementHtmlPos.get(0);  // 获取第一个元素，并判断是否是主元素
-            if (elementHtmlPo != null && RelationType.MASTER.getValue().equals(elementHtmlPo.getRelationType())){
-                resultVo = new ElementHtmlVo();
-                resultVo.copyPoValue(elementHtmlPo);
-
-                // 如果存在从属元素或者子元素，遍历元素
-                if (elementHtmlPos.size() > 1){
-                    Map<Integer, ElementHtmlVo> slaveMap = new HashMap<>();
-                    ElementHtmlVo tempSlaveVo = null;
-                    ElementHtmlVo tempVo = null;
-                    for (ElementHtmlPo tempPo : elementHtmlPos){
-                        tempVo = new ElementHtmlVo();
-                        tempVo.copyPoValue(tempPo);
-                        // 遍历节点为从节点
-                        if (RelationType.SLAVE.equals(tempVo.getRelationType())){
-                            slaveMap.put(tempPo.getId(), tempVo);
-                        }else if(RelationType.SUB.equals(tempVo.getRelationType())){  // 遍历节点为子节点
-                            // 判断是主节点的子元素
-                            if (tempPo.getEhParentId().equals(resultVo.getId())){
-                                resultVo.addSubElement(tempVo);
-                            }else if(slaveMap.containsKey(tempPo.getEhParentId())){   // 判断是从节点的子元素
-                                tempSlaveVo = slaveMap.get(tempPo.getEhParentId());
-                                tempSlaveVo.addSubElement(tempVo);
-                            }
-                        }
+    private List<ElementHtmlGroupVo> getElementHtmlVoListByElementId(Integer elementId){
+        List<ElementHtmlGroupVo> resultList = new ArrayList<>();
+        // 获取元素下的元素组
+        List<ElementHtmlGroupPo> ehgroupPoList = elementMapper.selectElementHtmlGroupListByElementId(elementId);
+        if (CollectionUtils.isNotEmpty(ehgroupPoList)){
+            ElementHtmlGroupVo ehGroupVo = null;
+            List<ElementHtmlPo> ehPoList = null;
+            ElementHtmlVo ehVo = null;
+            // 遍历html元素组
+            for (ElementHtmlGroupPo ehGroupPo : ehgroupPoList){
+                // 获取元素组下的元素列表
+                ehPoList = elementMapper.selectElementHtmlListByEhgId(ehGroupPo.getId());
+                if(CollectionUtils.isNotEmpty(ehPoList)){
+                    ehGroupVo = new ElementHtmlGroupVo(ehGroupPo.getId());
+                    for (ElementHtmlPo ehPo : ehPoList){
+                        ehVo = new ElementHtmlVo();
+                        ehVo.copyPoValue(ehPo);
+                        ehGroupVo.addElementHtmlVo(ehVo);
                     }
-                    // 将从属元素拷贝添加到主元素中
-                    if (slaveMap.size() > 0){
-                        resultVo.addSlaveElements(slaveMap.values());
-                    }
+                    resultList.add(ehGroupVo);
                 }
             }
         }
-        return resultVo;
+        return resultList;
     }
+
 }

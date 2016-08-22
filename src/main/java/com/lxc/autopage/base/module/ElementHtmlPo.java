@@ -1,11 +1,8 @@
 package com.lxc.autopage.base.module;
 
-import com.lxc.autopage.base.module.enums.RelationType;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by admin on 2016/8/1.
@@ -17,11 +14,10 @@ public class ElementHtmlPo implements Serializable{
     private String ehCode;
     private String ehValue;
     private String ehSuffix;
-    private Integer elementId;
+    private Integer ehGroupId;  // 分组标记
     private Integer htmlType;
-    private Integer relationType;  // 主从类型、主子
-    private Integer ehParentId;
     private String ehDesc;
+    private int showSeq;
 
     public Integer getId() {
         return id;
@@ -55,12 +51,12 @@ public class ElementHtmlPo implements Serializable{
         this.ehSuffix = ehSuffix;
     }
 
-    public Integer getElementId() {
-        return elementId;
+    public Integer getEhGroupId() {
+        return ehGroupId;
     }
 
-    public void setElementId(Integer elementId) {
-        this.elementId = elementId;
+    public void setEhGroupId(Integer ehGroupId) {
+        this.ehGroupId = ehGroupId;
     }
 
     public Integer getHtmlType() {
@@ -71,27 +67,19 @@ public class ElementHtmlPo implements Serializable{
         this.htmlType = htmlType;
     }
 
-    public Integer getRelationType() {
-        return relationType;
-    }
-
-    public void setRelationType(Integer relationType) {
-        this.relationType = relationType;
-    }
-
-    public Integer getEhParentId() {
-        return ehParentId;
-    }
-
-    public void setEhParentId(Integer ehParentId) {
-        this.ehParentId = ehParentId;
-    }
-
     public String getEhDesc() {
         return ehDesc;
     }
 
     public void setEhDesc(String ehDesc) {
         this.ehDesc = ehDesc;
+    }
+
+    public int getShowSeq() {
+        return showSeq;
+    }
+
+    public void setShowSeq(int showSeq) {
+        this.showSeq = showSeq;
     }
 }

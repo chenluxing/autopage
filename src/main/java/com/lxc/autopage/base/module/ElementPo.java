@@ -18,8 +18,6 @@ public class ElementPo implements Serializable {
     private Integer groupId;
     private int showSeq;
 
-
-
     public Integer getId() {
         return id;
     }

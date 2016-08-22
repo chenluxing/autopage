@@ -16,31 +16,55 @@
         <result property="ehCode" column="EH_CODE"/>
         <result property="ehValue" column="EH_VALUE"/>
         <result property="ehSuffix" column="EH_SUFFIX"/>
-        <result property="elementId" column="ELEMENT_ID"/>
+        <result property="ehGroupId" column="EH_GROUP_ID"/>
         <result property="htmlType" column="HTML_TYPE"/>
-        <result property="relationType" column="RELATION_TYPE"/>
-        <result property="parentEhId" column="EH_PARENT_ID"/>
         <result property="ehDesc" column="EH_DESC"/>
+        <result property="showSeq" column="SHOW_SEQ"/>
+        <result property="gmtCreated" column="GMT_CREATED"/>
+        <result property="gmtModified" column="GMT_MODIFIED"/>
     </resultMap>
 
-    <sql id="allColumns">
-        id,group_id,element_code,element_name,element_desc,element_type,element_etc,gmt_created,gmt_modified
+    <resultMap type="com.lxc.autopage.base.module.ElementHtmlGroupPo" id="elementHtmlGroupMap">
+        <id property="id" column="ID"/>
+        <result property="elementId" column="ELEMENT_ID"/>
+        <result property="showSeq" column="SHOW_SEQ"/>
+        <result property="ehgDesc" column="EHG_DESC"/>
+        <result property="gmtCreated" column="GMT_CREATED"/>
+        <result property="gmtModified" column="GMT_MODIFIED"/>
+    </resultMap>
+
+    <sql id="allColumns_element">
+        id, group_id, element_code, element_name, element_desc, element_type, element_etc, gmt_created, gmt_modified
+    </sql>
+
+    <sql id="allColumns_ehg">
+        id, element_id, ehg_desc, show_seq, gmt_created, gmt_modified
+    </sql>
+
+    <sql id="allColumns_eh">
+        id, eh_code, eh_value, eh_suffix, eh_group_id, html_type, eh_desc, show_seq, gmt_created, gmt_modified
     </sql>
 
     <select id="selectListByGroupId" resultMap="elementMap">
-        <![CDATA[
-            SELECT
-              id,group_id,element_code,element_name,element_desc,element_type,element_etc,gmt_created,gmt_modified
-            from tb_element
-            where group_id=#{groupId, jdbcType=INTEGER}
-        ]]>
+        SELECT
+          <include refid="allColumns_element" />
+        from tb_element
+        where group_id=#{groupId, jdbcType=INTEGER}
     </select>
 
-    <select id="selectElementHtmlListByElementId" resultMap="elementHtmlMap">
-      select id,eh_code,eh_value,eh_suffix,element_id,html_type,relation_type,eh_parent_id,eh_desc
-      from tb_element_html
-      where element_id=#{elementId, jdbcType=INTEGER}
-      order by relation_type
+    <select id="selectElementHtmlGroupListByElementId" resultMap="elementHtmlGroupMap">
+        SELECT
+          <include refid="allColumns_ehg" />
+        from tb_element_html_group
+        where element_id=#{elementId, jdbcType=INTEGER}
+        order by show_seq
     </select>
 
+    <select id="selectElementHtmlListByEhgId" resultMap="elementHtmlMap">
+        select
+          <include refid="allColumns_eh" />
+        from tb_element_html
+        where eh_group_id=#{ehGroupId, jdbcType=INTEGER}
+        order by show_seq
+    </select>
 </mapper>

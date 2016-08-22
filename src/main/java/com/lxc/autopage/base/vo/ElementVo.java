@@ -4,6 +4,7 @@ import com.lxc.autopage.base.module.ElementPo;
 import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by admin on 2016/8/1.
@@ -17,7 +18,7 @@ public class ElementVo implements Serializable {
     private Integer elementType;
     private Integer groupId;
     private int showSeq;
-    private ElementHtmlVo elementHtml;
+    private List<ElementHtmlGroupVo> elementHtmlGroupVoList;
 
     public ElementVo copyPoValue(ElementPo po){
         this.id = po.getId();
@@ -86,11 +87,11 @@ public class ElementVo implements Serializable {
         this.showSeq = showSeq;
     }
 
-    public ElementHtmlVo getElementHtml() {
-        return elementHtml;
+    public List<ElementHtmlGroupVo> getElementHtmlGroupVoList() {
+        return elementHtmlGroupVoList;
     }
 
-    public void setElementHtml(ElementHtmlVo elementHtml) {
-        this.elementHtml = elementHtml;
+    public void setElementHtmlGroupVoList(List<ElementHtmlGroupVo> elementHtmlGroupVoList) {
+        this.elementHtmlGroupVoList = elementHtmlGroupVoList;
     }
 }
