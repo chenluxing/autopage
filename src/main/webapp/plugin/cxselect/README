@@ -1,0 +1,15 @@
+多级联动菜单
+
+官网地址：https://github.com/ciaoca/cxSelect
+
+cxSelect 是基于 jQuery 的多级联动菜单插件，适用于省市、商品分类等联动菜单。
+
+列表数据通过 AJAX 获取，也可以自定义，数据内容使用 JSON 格式。
+同时兼容 Zepto，方便在移动端使用。
+
+版本：
+
+jQuery v1.7+ | Zepto v1.0+
+jQuery cxSelect v1.3.9
+文档：http://code.ciaoca.com/jquery/cxselect/
+示例：http://code.ciaoca.com/jquery/cxselect/demo/

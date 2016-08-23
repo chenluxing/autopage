@@ -1,8 +1,12 @@
 package com.lxc.autopage.base.vo;
 
 import com.lxc.autopage.base.module.ElementHtmlPo;
+import com.lxc.autopage.base.module.enums.HtmlType;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by admin on 2016/8/1.
@@ -14,8 +18,9 @@ public class ElementHtmlVo implements Serializable{
     private String ehValue;
     private String ehSuffix;
     private Integer ehGroupId;
-    private Integer htmlType;
+    private HtmlType htmlType;
     private String desc;
+    private List<ElementHtmlVo> subList;
 
     public ElementHtmlVo copyPoValue(ElementHtmlPo po){
         this.id = po.getId();
@@ -23,9 +28,17 @@ public class ElementHtmlVo implements Serializable{
         this.ehValue = po.getEhValue();
         this.ehSuffix = po.getEhSuffix();
         this.ehGroupId = po.getEhGroupId();
-        this.htmlType = po.getHtmlType();
+        this.htmlType = HtmlType.getByValue(po.getHtmlType());
         this.desc = po.getEhDesc();
+        subList = new ArrayList<>();
         return this;
+    }
+
+    public void addSubElementVo(ElementHtmlVo vo){
+        if (CollectionUtils.isEmpty(subList)){
+            subList = new ArrayList<>();
+        }
+        subList.add(vo);
     }
 
     public Integer getId() {
@@ -68,11 +81,11 @@ public class ElementHtmlVo implements Serializable{
         this.ehGroupId = ehGroupId;
     }
 
-    public Integer getHtmlType() {
+    public HtmlType getHtmlType() {
         return htmlType;
     }
 
-    public void setHtmlType(Integer htmlType) {
+    public void setHtmlType(HtmlType htmlType) {
         this.htmlType = htmlType;
     }
 
@@ -82,5 +95,13 @@ public class ElementHtmlVo implements Serializable{
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public List<ElementHtmlVo> getSubList() {
+        return subList;
+    }
+
+    public void setSubList(List<ElementHtmlVo> subList) {
+        this.subList = subList;
     }
 }

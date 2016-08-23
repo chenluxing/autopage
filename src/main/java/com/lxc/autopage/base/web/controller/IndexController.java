@@ -30,4 +30,14 @@ public class IndexController extends BaseController {
         return "index";
     }
 
+    @RequestMapping("/indexTemp")
+    public String getIndexTemp(ModelMap modelMap){
+        try{
+            List<GroupVo> groups = elementService.getGroups();
+            modelMap.addAttribute("groups", groups);
+        }catch (Exception ex){
+            throw new RuntimeException(ex);
+        }
+        return "index_temp";
+    }
 }

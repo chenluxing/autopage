@@ -67,4 +67,12 @@
         where eh_group_id=#{ehGroupId, jdbcType=INTEGER}
         order by show_seq
     </select>
+
+    <select id="selectElementHtmlListByEhParentId" resultMap="elementHtmlMap">
+        select
+        <include refid="allColumns_eh" />
+        from tb_element_html
+        where eh_parent_id=#{ehParentId, jdbcType=INTEGER}
+        order by show_seq
+    </select>
 </mapper>

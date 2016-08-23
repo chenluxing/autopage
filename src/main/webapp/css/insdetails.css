@@ -44,11 +44,6 @@ input.text, select.text{
     min-height: 130px;
     display: inline-block;
 }
-.dettop .detl li {
-    height: 50px;
-    line-height: 50px;
-    *height:auto;
-}
 .selectUl{ width: 50%; padding-bottom: 20px; padding-top: 5px;}
 .selectUl ul li{ float: left; width: 100%; margin-top: 15px;}
 .selectUl ul li label{
@@ -81,6 +76,9 @@ input.text, select.text{
     height: 25px;
     line-height: 25px;
     padding-left: 2%;
+}
+.detl label{
+    line-height: 25px;
 }
 .detltit{
     height: 24px;

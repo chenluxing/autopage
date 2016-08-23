@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.lang.model.element.Element;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,6 +97,8 @@ public class ElementServiceImpl implements IElementService{
             ElementHtmlGroupVo ehGroupVo = null;
             List<ElementHtmlPo> ehPoList = null;
             ElementHtmlVo ehVo = null;
+            ElementHtmlVo subEhVo = null;
+            List<ElementHtmlPo> subList = null;
             // 遍历html元素组
             for (ElementHtmlGroupPo ehGroupPo : ehgroupPoList){
                 // 获取元素组下的元素列表
@@ -105,6 +108,16 @@ public class ElementServiceImpl implements IElementService{
                     for (ElementHtmlPo ehPo : ehPoList){
                         ehVo = new ElementHtmlVo();
                         ehVo.copyPoValue(ehPo);
+                        if (ehVo.getHtmlType() != null && ehVo.getHtmlType().hasSubElement()){
+                            subList = elementMapper.selectElementHtmlListByEhParentId(ehVo.getId());
+                            if (CollectionUtils.isNotEmpty(subList)){
+                                for (ElementHtmlPo subPo : subList){
+                                    subEhVo = new ElementHtmlVo();
+                                    subEhVo.copyPoValue(subPo);
+                                    ehVo.addSubElementVo(subEhVo);
+                                }
+                            }
+                        }
                         ehGroupVo.addElementHtmlVo(ehVo);
                     }
                     resultList.add(ehGroupVo);

@@ -15,6 +15,7 @@ public class ElementHtmlPo implements Serializable{
     private String ehValue;
     private String ehSuffix;
     private Integer ehGroupId;  // 分组标记
+    private Integer ehParentId; // 父节点ID
     private Integer htmlType;
     private String ehDesc;
     private int showSeq;
@@ -53,6 +54,14 @@ public class ElementHtmlPo implements Serializable{
 
     public Integer getEhGroupId() {
         return ehGroupId;
+    }
+
+    public Integer getEhParentId() {
+        return ehParentId;
+    }
+
+    public void setEhParentId(Integer ehParentId) {
+        this.ehParentId = ehParentId;
     }
 
     public void setEhGroupId(Integer ehGroupId) {

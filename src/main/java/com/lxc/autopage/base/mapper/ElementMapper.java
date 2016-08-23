@@ -32,4 +32,11 @@ public interface ElementMapper {
      */
     List<ElementHtmlPo> selectElementHtmlListByEhgId(Integer ehGroupId);
 
+    /**
+     * 根据父节点ID获取子节点ID
+     * @param ehParentId
+     * @return
+     */
+    List<ElementHtmlPo> selectElementHtmlListByEhParentId(Integer ehParentId);
+
 }
