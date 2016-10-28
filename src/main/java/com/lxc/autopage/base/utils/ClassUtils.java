@@ -118,8 +118,6 @@ public class ClassUtils {
         }
     }
 
-    public static void  main(String[] args){
-        ClassUtils.getClasses("com.lxc.autopage");
-    }
+
 
 }

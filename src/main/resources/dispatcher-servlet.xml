@@ -60,6 +60,7 @@
         <property name="freemarkerVariables">
             <map>
                 <entry key="base" value="#{servletContext.contextPath}" />
+                <entry key="cssPath" value="${template.resourcePath}/css" />
             </map>
         </property>
     </bean>

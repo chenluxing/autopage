@@ -1,5 +1,7 @@
 package com.lxc.autopage.base.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.lxc.autopage.base.mapper.ElementMapper;
 import com.lxc.autopage.base.module.ElementHtmlGroupPo;
 import com.lxc.autopage.base.module.ElementHtmlPo;
@@ -125,6 +127,12 @@ public class ElementServiceImpl implements IElementService{
             }
         }
         return resultList;
+    }
+
+    public Page getPage(int pageNum, int pageSize){
+        PageHelper.startPage(pageNum, pageSize);
+        Page page = (Page)elementMapper.selectListByGroupId(Integer.MIN_VALUE);
+        return page;
     }
 
 }

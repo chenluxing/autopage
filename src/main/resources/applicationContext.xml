@@ -15,7 +15,9 @@
 
     <mvc:annotation-driven />
 
-    <mvc:default-servlet-handler/>
+    <aop:aspectj-autoproxy />
+
+    <mvc:default-servlet-handler />
 
     <!-- 导入数据源配置文件 -->
     <import resource="datasource.xml" />

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by chenlx
@@ -17,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 public class BaseController {
 
     private static final Logger log = LoggerFactory.getLogger(BaseController.class);
+
+    public static final String HTTP_REQUEST = "http_request";
+    private static ThreadLocal<Map<String, Object>> localParams = new ThreadLocal<>();
 
     /**
      * 请求地址
@@ -30,6 +35,12 @@ public class BaseController {
      */
     @InitBinder
     protected void initBinder(WebDataBinder binder, HttpServletRequest request) {
+        Map<String, Object> params = localParams.get();
+        if (params == null) {
+            params = new HashMap<>();
+        }
+        params.put(HTTP_REQUEST, request);
+        localParams.set(params);
 
         binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
         this.contextPath = request.getServletPath();
