@@ -11,6 +11,7 @@ import java.io.IOException;
  * 节点Leader选举
  * Created by chenlx
  * on 2016/10/28.
+ * http://www.open-open.com/lib/view/open1434353619567.html
  */
 public abstract class LeaderSelectorClient extends LeaderSelectorListenerAdapter implements Closeable {
 
