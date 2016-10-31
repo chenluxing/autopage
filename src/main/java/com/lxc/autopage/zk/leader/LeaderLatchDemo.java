@@ -1,5 +1,6 @@
-package com.lxc.autopage.zk;
+package com.lxc.autopage.zk.leader;
 
+import com.lxc.autopage.zk.CuratorFactory;
 import org.apache.curator.framework.recipes.leader.LeaderLatch;
 import org.apache.curator.framework.recipes.leader.LeaderLatchListener;
 

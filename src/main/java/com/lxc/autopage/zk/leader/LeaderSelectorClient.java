@@ -1,4 +1,4 @@
-package com.lxc.autopage.zk;
+package com.lxc.autopage.zk.leader;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.leader.LeaderSelector;
