@@ -8,7 +8,8 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
- * 节点Leader选举
+ * 节点Leader选举，
+ * 当获取leader后执行任务执行方法，任务方法执行完成后让出leader
  * Created by chenlx
  * on 2016/10/28.
  * http://www.open-open.com/lib/view/open1434353619567.html
@@ -30,7 +31,7 @@ public abstract class LeaderSelectorClient extends LeaderSelectorListenerAdapter
     abstract void doWork();
 
     /**
-     *
+     * 成为leader后执行此方法，执行完成此方法后会让出leader
      * @param curatorFramework
      * @throws Exception
      */
@@ -44,7 +45,7 @@ public abstract class LeaderSelectorClient extends LeaderSelectorListenerAdapter
      * @throws IOException
      */
     public void start() throws IOException {
-        leaderSelector.start();
+        this.leaderSelector.start();
     }
 
     /**

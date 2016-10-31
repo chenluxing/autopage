@@ -7,7 +7,8 @@ import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 import org.apache.zookeeper.data.Stat;
-import org.springframework.util.Assert;
+
+import java.util.Properties;
 
 /**
  * Created by chenlx
@@ -15,18 +16,42 @@ import org.springframework.util.Assert;
  */
 public class CuratorFactory {
 
+    static String ZK_HOST = "zkHost";
+    static String CONNECTION_TIMEOUT = "connectionTimeout";
+    static String SESSION_TIMEOUT = "sessionTimeout";
+
     private static CuratorFramework client;
 
     synchronized public static CuratorFramework getClient() {
         synchronized(client) {
             if (client == null) {
-                String zkHost = "";
-                RetryPolicy rp = new ExponentialBackoffRetry(1000, 3);
-                CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder().connectString(zkHost);
-                builder.connectionTimeoutMs(5000);
-                builder.sessionTimeoutMs(5000);
-                builder.retryPolicy(rp);
-                client = builder.build();
+                Properties zkProp = getZkProperties();
+                String zkHost = zkProp.getProperty(ZK_HOST);
+                if (StringUtils.isNotEmpty(zkHost)) {
+                    int connectionTimeout = 5000;
+                    int sessionTimeout = 5000;
+                    // 读取connection超时时间
+                    if (StringUtils.isNotEmpty(zkProp.getProperty(CONNECTION_TIMEOUT))) {
+                        connectionTimeout = Integer.valueOf(zkProp.getProperty(CONNECTION_TIMEOUT));
+                    }
+                    // 读取session超时时间
+                    if (StringUtils.isNotEmpty(zkProp.getProperty(SESSION_TIMEOUT))) {
+                        sessionTimeout = Integer.valueOf(zkProp.getProperty(SESSION_TIMEOUT));
+                    }
+                    // 设置重试策略
+                    // 提供了3个重试策略：LinearRetry：水平式重试，重试间隔时间相同
+                    // ExponentialRetry:递增式重试，每一次重试时间是前一次的2倍
+                    // NoRetry：不重试，可用来配合前面两个
+                    RetryPolicy rp = new ExponentialBackoffRetry(1000, 3);
+                    CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder().connectString(zkHost);
+                    builder.connectionTimeoutMs(connectionTimeout);
+                    builder.sessionTimeoutMs(sessionTimeout);
+                    builder.retryPolicy(rp);
+                    client = builder.build();
+                }
+                else {
+                    throw new IllegalArgumentException("zookeeper host is not null !");
+                }
             }
             return client;
         }
@@ -70,5 +95,9 @@ public class CuratorFactory {
                 CloseableUtils.closeQuietly(client);
             }
         }
+    }
+
+    synchronized private static Properties getZkProperties(){
+        return null;
     }
 }
