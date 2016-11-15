@@ -1,4 +1,4 @@
-package com.lxc.autopage.excel;
+package com.lxc.autopage.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -321,7 +321,7 @@ public class DateUtil {
      * @return Date object
      */
     public static Date toDate(String sDate, String sFmt) {
-        if (StringUtil.isBlank(sDate) || StringUtil.isBlank(sFmt)) {
+        if (StringUtils.isBlank(sDate) || StringUtils.isBlank(sFmt)) {
             return null;
         }
 
@@ -358,7 +358,7 @@ public class DateUtil {
      * @return the formatted string
      */
     public static String toString(Date dt, String sFmt) {
-        if (null == dt || StringUtil.isBlank(sFmt)) {
+        if (null == dt || StringUtils.isBlank(sFmt)) {
             return null;
         }
 
@@ -415,7 +415,7 @@ public class DateUtil {
             return null;
         }
 
-        if (StringUtil.isBlank(pattern)) {
+        if (StringUtils.isBlank(pattern)) {
             pattern = TIME_PATTERN;
         }
 
@@ -458,7 +458,7 @@ public class DateUtil {
             return null;
         }
 
-        if (StringUtil.isBlank(pattern)) {
+        if (StringUtils.isBlank(pattern)) {
             pattern = TIME_PATTERN;
         }
 
@@ -532,7 +532,7 @@ public class DateUtil {
      * @return the formatted string
      */
     public static String formatDatetoString(Date d, String pattern) {
-        if (null == d || StringUtil.isBlank(pattern)) {
+        if (null == d || StringUtils.isBlank(pattern)) {
             return null;
         }
 
@@ -817,7 +817,7 @@ public class DateUtil {
      * @return formatted string
      */
     public static String formatTimestamp(Timestamp t, String sFmt) {
-        if (t == null || StringUtil.isBlank(sFmt)) {
+        if (t == null || StringUtils.isBlank(sFmt)) {
             return "";
         }
 
@@ -1237,20 +1237,6 @@ public class DateUtil {
         return calendar.getTime();
     }
 
-    /**
-     * 是否是法定假日
-     *
-     * @param date
-     * @return
-     * @author lihh
-     * @date 2015年3月14日
-     */
-    public static boolean isHoliday(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat(DATE_FMT_3);
-        String dateStr = format.format(date);
-        List<String> holidays = HolidaysConfig.getHolidays();
-        return holidays.contains(dateStr);
-    }
 
     /**
      * 是否是周末
@@ -1266,94 +1252,6 @@ public class DateUtil {
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         // 1 : 周日 7 : 周六
         return dayOfWeek == 1 || dayOfWeek == 7;
-    }
-
-    /**
-     * 是否是工作日
-     *
-     * @param date
-     * @return
-     * @author lihh
-     * @date 2015年3月14日
-     */
-    public static boolean isWorkday(Date date) {
-        return !(isWeekend(date) || isHoliday(date));
-    }
-
-    /**
-     * 添加工作日
-     *
-     * @param date 增加天数
-     * @param days 工作日
-     * @return
-     * @author lihh
-     * @date 2015年3月14日
-     */
-    public static Date addWorkday(Date date, int days) {
-        if (days == 0) {
-            return date;
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        if (days > 0) {
-            // 增加天数
-            int idx = 0;
-            while (idx < days) {
-                calendar.add(Calendar.DAY_OF_YEAR, 1);
-                if (isWorkday(calendar.getTime())) {
-                    idx++;
-                }
-            }
-            return calendar.getTime();
-        } else {
-            // 减少天数
-            int idx = 0;
-            while (idx > days) {
-                calendar.add(Calendar.DAY_OF_YEAR, -1);
-                if (isWorkday(calendar.getTime())) {
-                    idx--;
-                }
-            }
-            return calendar.getTime();
-        }
-    }
-
-    /**
-     * 计算和下个工作日间隔的天数
-     *
-     * @return
-     * @author lihh
-     * @date 2015年3月17日
-     */
-    public static int getsNextWorkdayInterval() {
-        Calendar calendar = Calendar.getInstance();
-        int t = 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        while (true) {
-            calendar.set(Calendar.DAY_OF_MONTH, day + t);
-            if (DateUtil.isWorkday(calendar.getTime())) {
-                break;
-            } else {
-                t++;
-            }
-        }
-        return t;
-    }
-
-    public static Date getNextWorkday() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(getCurrentDay());
-        int t = 1;
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        while (true) {
-            calendar.set(Calendar.DAY_OF_MONTH, day + t);
-            if (DateUtil.isWorkday(calendar.getTime())) {
-                break;
-            } else {
-                t++;
-            }
-        }
-        return calendar.getTime();
     }
 
     public static String getNextYearCurrentDay() {
@@ -1442,7 +1340,7 @@ public class DateUtil {
      */
     public static boolean isInDate(String dateStr, Date date1, Date date2) {
         Date date = null;
-        if (StringUtil.isNotEmpty(dateStr)) {
+        if (StringUtils.isNotEmpty(dateStr)) {
             try {
                 date = new SimpleDateFormat(TIME_PATTERN).parse(dateStr);
             } catch (ParseException e) {
@@ -1481,10 +1379,7 @@ public class DateUtil {
     }
     public static String afterDay(Date date) {
         Calendar calendar = Calendar.getInstance();
-//        Date date = new Date(System.currentTimeMillis());
         calendar.setTime(date);
-//        calendar.add(Calendar.WEEK_OF_YEAR, -1);
-//        calendar.add(Calendar.YEAR, +1);
         calendar.add(Calendar.DATE, +1);
         date = calendar.getTime();
         return new SimpleDateFormat(DATE_FMT_3).format(date.getTime());
@@ -1512,15 +1407,5 @@ public class DateUtil {
         Calendar cal = new GregorianCalendar();
         cal.setTime(date);
         return cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-    }
-
-
-
-    public static void main(String[] args) throws ParseException {
-//        String tbDate = "2016-08-03 00:00:00";
-//        String sDate = getDateStrFromDate(getDateFromString(tbDate, TIME_PATTERN));
-//        System.out.println(sDate);
-//        System.out.println(afterYear(DateUtil.getDateFromString(tbDate, DateUtil.TIME_PATTERN), DATE_FMT_3));
-        System.out.println(DateUtil.toString(new Date(), DateUtil.DATE_FMT_3));
     }
 }
