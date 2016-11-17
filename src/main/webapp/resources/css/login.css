@@ -1,0 +1,98 @@
+@charset "utf-8";
+/*全局*/
+html,body {
+    height:100%;overflow:hidden;
+}
+body{
+    background: #FFF;
+    font-family: "微软雅黑";
+}
+ul,li{
+    list-style: none;
+}
+.loginCon{
+    background: #FFF;
+}
+.loginCon ul{
+
+    width: 294px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+.loginCon ul li{
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+.loginCon li #username,.loginCon li #password{
+    width: 290px;
+    line-height: 40px;
+}
+.inputText{
+    text-indent: 10px;
+    border: 1px solid #cacaca;
+    border-radius: 6px;
+}
+.inputErr{
+    border: 1px solid #ff0000;
+}
+.verifyCode{
+    line-height: 40px;
+}
+.verifyCode .verifyImg .inputImg{
+    width: 100px;
+    height: 40px;
+    overflow: hidden;
+}
+.verifyCode .imgCode{
+    width: 100px;
+    margin: 1px 10px;
+}
+.verifyCode .imgCodeLink a {
+    font-size: 14px;
+    color: #005ea7;
+    text-decoration: none;
+}
+.fl{
+    float: left;
+}
+.loginBtn{
+    display: inline-block;
+    height: 42px;
+    width: 293px;
+    text-align: center;
+    line-height: 42px;
+    color: #fff;
+    background: url(../images/login/login.png) no-repeat;
+    font-size: 18px;
+    border: 0px;
+}
+.rememberMe{
+    text-align: left;
+    text-indent: 5px;
+    color: #999;
+    font-size: 14px;
+    line-height: 18px;
+}
+.err {
+    position: relative;
+    display: none;
+    height: 20px;
+    line-height: 20px;
+}
+.errShow {
+    display: block;
+}
+.errIcon{
+    position: absolute;
+    top: 3px;
+    left: 0px;
+    width: 13px;
+    height: 13px;
+    background: url(../images/login/error.png) no-repeat;
+    line-height: 13px;
+}
+.errText {
+    color: #FF3607 !important;
+    text-align: left;
+    text-indent: 15px;
+}

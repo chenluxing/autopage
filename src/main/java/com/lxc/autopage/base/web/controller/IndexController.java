@@ -64,21 +64,15 @@ public class IndexController extends BaseController {
     @RequestMapping("/loginIn")
     public String loginIn(HttpServletRequest request){
         if (SecurityUtils.getSubject().isAuthenticated()){
-            return "/ap_index";
+            return "/main";
         }else{
             return "redirect:/login.html";
         }
     }
 
     @RequestMapping("/index")
-    public String getIndex(ModelMap modelMap){
-        try{
-            List<GroupVo> groups = elementService.getGroups();
-            modelMap.addAttribute("groups", groups);
-        }catch (Exception ex){
-            throw new RuntimeException(ex);
-        }
-        return "index";
+    public String getIndex(){
+        return "main";
     }
 
     @RequestMapping("/indexTemp")

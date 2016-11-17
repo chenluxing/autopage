@@ -1,5 +1,6 @@
 package com.lxc.autopage.sys.auth.realm;
 
+import com.lxc.autopage.plugin.captcha.CaptchaUtil;
 import com.lxc.autopage.sys.auth.vo.ApAuthenticationToken;
 import com.lxc.autopage.sys.auth.vo.ApPrincipal;
 import com.lxc.autopage.plugin.encrypt.SecurityUtil;
@@ -30,6 +31,9 @@ public class ApAuthenticationRealm extends AuthorizingRealm implements Applicati
             String captchaId = apAuthenticationToken.getCaptchaId();
             String captcha = apAuthenticationToken.getCaptcha();
             String ip = apAuthenticationToken.getHost();
+            if (!CaptchaUtil.isValid(captchaId, captcha)) {
+                throw new UnsupportedTokenException("验证码错误");
+            }
             if (StringUtils.isNotEmpty(username)){
                 String password = new String(apAuthenticationToken.getPassword());
                 String md5Password = SecurityUtil.md5(password);

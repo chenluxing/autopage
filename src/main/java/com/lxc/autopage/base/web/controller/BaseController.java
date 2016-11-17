@@ -30,8 +30,8 @@ public class BaseController {
 
     /**
      * 数据绑定
-     *
-     * @param binder WebDataBinder
+     * @param binder
+     * @param request
      */
     @InitBinder
     protected void initBinder(WebDataBinder binder, HttpServletRequest request) {

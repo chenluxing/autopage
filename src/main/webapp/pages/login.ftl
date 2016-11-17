@@ -17,13 +17,15 @@
     <meta name="x5-orientation" content="portrait">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <title>登录</title>
+    <link href="${base}/resources/css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <div class="saasMain">
+    <div class="content" style="margin: 0 auto; position: relative;">
         <div class="loginCon">
             <form id="loginForm" action="${base}/loginIn.html" method="POST">
                 <input type="hidden" id="enPassword" name="enPassword"/>
-                <ul class="formLi">
+                <input type="hidden" name="captchaId" value="${captchaId}"/>
+                <ul>
                     <li>
                         <input class="inputText inputMobile"  id="username" name="username" maxlength="11" type="text" placeHolder="手机号" /></li>
                     <li>
@@ -40,21 +42,21 @@
                             <a href="javascript:void(0);" onclick="changeCaptcha()">换一张</a>
                         </div>
                     </li>
-                    <li>
-                        <div class="err">
+                    <li class="err">
+                        <div>
                             <i class="errIcon"></i>
                             <p class="errText"></p>
                         </div>
                     </li>
-                    <li class="sassRemember">
-                        <div class="reuser clearfix">
+                    <li>
+                        <div class="rememberMe">
                             <input type="checkbox" class="reusername" id="isRememberUsername" value="true"/>
                             <label for="isRememberUsername">记住用户名</label>
                         </div>
                     </li>
                     <li>
-                        <div class="loginBtn">
-                            <input class="logBtn" type="submit" value="登录" />
+                        <div>
+                            <input class="loginBtn" type="submit" value="登录" />
                         </div>
                     </li>
                     <li style="margin-top: 5px;">
@@ -68,20 +70,21 @@
     </div>
 
 </body>
-<script type="text/javascript" src="${base}/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="${base}/resources/js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="${base}/resources/js/jsbn.js"></script>
 <script type="text/javascript" src="${base}/resources/js/prng4.js"></script>
 <script type="text/javascript" src="${base}/resources/js/rng.js"></script>
 <script type="text/javascript" src="${base}/resources/js/rsa.js"></script>
 <script type="text/javascript" src="${base}/resources/js/base64.js"></script>
+<script type="text/javascript" src="${base}/resources/js/common.js"></script>
 <script>
     window.onresize = function(){
-        var winh =($(window).height()-654) /2;
-        $(".saasMain").css("top", winh);
+        var winh =($(window).height()-300) /3;
+        $(".content").css("top", winh);
     }
     $(function() {
-        var winh =($(window).height()-654) /2;
-        $(".saasMain").css("top", winh);
+        var winh =($(window).height()-300) /3;
+        $(".content").css("top", winh);
     });
     $(document).ready(function() {
         var isChrome = window.navigator.userAgent.indexOf("Chrome") !== -1;
@@ -91,11 +94,7 @@
 
         function InputCheck() {
             this.mobileFlag = false;
-            this.pwdFlag = false;
-            this.imgFlag = true;
-
             this.errText = "";
-            this.$err = $(".err");
         }
 
         InputCheck.prototype.showErr = function($input) {
@@ -114,75 +113,50 @@
 
         //光标进入文本框时，文本框变颜色
         $(".inputText").bind("focus", function() {
-            var $this = $(this);
-            var $inputLi = $this;
-            var $err = $(".err");
             //文本框变颜色
-            $inputLi.addClass("inputFocus");
+            $(this).addClass("inputFocus");
             //去除文本框错误的提示样式
-            $inputLi.removeClass("inputErr");
-
-            //如果触发的是密码文本框，则马有遮掩效果
-            if ($this.hasClass("inputPwd")) {
-                horse.coverEye();
-            }
-
+            $(this).removeClass("inputErr");
         }).bind("blur", function() {
-            var $this = $(this);
-            var $inputLi = $this;
-            var inputVal = trimVal($this.val());
-
             //文本框变灰色
-            $inputLi.removeClass("inputFocus");
-            if ($this.hasClass("inputPwd")) {
-                //如果触发的是密码文本框，则马睁眼
-                horse.openEye();
-
-            }
+            $(this).removeClass("inputFocus");
         })
         //点击的登录按钮
-        $(".logBtn").bind(
-                "click",
-                function() {
-                    var $mobile = $(".inputMobile");
-                    var $pwd = $(".inputPwd");
-                    var $imgParent = $(".verifyCode");
-                    var $imgInput = $(".verifyCode .inputText");
-                    var checkResult = false;
+        $(".logBtn").bind("click", function() {
+            var $mobile = $(".inputMobile");
+            var $pwd = $(".inputPwd");
+            var $imgInput = $(".verifyCode .inputText");
+            var checkResult = false;
 
-                    //首先判断手机号和密码是否同时未输入
-                    if ($mobile.val() === "" && $pwd.val() === "") {
-                        inputCheck.errText = "请输入手机号码和密码";
-                        inputCheck.showErr($mobile);
-                        inputCheck.showErr($pwd);
-                        return false;
-                    }
+            //首先判断手机号和密码是否同时未输入
+            if ($mobile.val() === "" && $pwd.val() === "") {
+                inputCheck.errText = "请输入手机号码和密码";
+                inputCheck.showErr($mobile);
+                inputCheck.showErr($pwd);
+                return false;
+            }
 
-                    //首先判断手机号码格式是否正确
-                    inputCheck.mobileFlag = check_m($mobile);
-                    if (inputCheck.mobileFlag) {
-                        //手机号码格式验证成功，则验证密码是否为空
-                        inputCheck.pwdFlag = check_pwd($pwd);
-                    }
-                    if (!$(".err").hasClass("errShow")) {
-                        if ($isRememberUsername.prop("checked")) {
-                            addCookie("adminUsername", $username.val(), {expires: 7 * 24 * 60 * 60});
-                        } else {
-                            removeCookie("adminUsername");
-                        }
-                        var rsaKey = new RSAKey();
-                        rsaKey.setPublic(b64tohex("${modulus}"), b64tohex("${exponent}"));
-                        var enPassword = hex2b64(rsaKey.encrypt($password.val()));
-                        $("#enPassword").val(enPassword);
-                        $("#loginForm").submit();
-                    }
+            //首先判断手机号码格式是否正确
+            inputCheck.mobileFlag = check_m($mobile);
+            if (inputCheck.mobileFlag) {
+                //手机号码格式验证成功，则验证密码是否为空
+                inputCheck.pwdFlag = check_pwd($pwd);
+            }
+            if (!$(".err").hasClass("errShow")) {
+                if ($isRememberUsername.prop("checked")) {
+                    addCookie("adminUsername", $username.val(), {expires: 7 * 24 * 60 * 60});
+                } else {
+                    removeCookie("adminUsername");
+                }
+                var rsaKey = new RSAKey();
+                rsaKey.setPublic(b64tohex("${modulus}"), b64tohex("${exponent}"));
+                var enPassword = hex2b64(rsaKey.encrypt($password.val()));
+                $("#enPassword").val(enPassword);
+                $("#loginForm").submit();
+            }
+            inputCheck.imgFlag = false;
+        });
 
-                    //java这边需要判断输错的次数是否超过三次，是则显示图形验证码
-
-                    //$imgParent.removeClass("disNone");
-                    inputCheck.imgFlag = false;
-
-                })
         //回车键触发登录
         $(".inputMobile,.inputPwd,.inputImg").keydown(function(e) {
             var curKey = e.keyCode || e.keyChar || e.which;
@@ -195,8 +169,7 @@
             var inputVal = trimVal($mobile.val());
             var errText = "ok";
 
-            errText = inputVal.length == 0 ? "请输入手机号码"
-                    : (checkResult = checkMoblie(inputVal) ? "ok" : "手机号码不正确");
+            errText = inputVal.length == 0 ? "请输入手机号码" : (checkResult = checkMoblie(inputVal) ? "ok" : "手机号码不正确");
 
             if (errText == "ok") {
                 //java判断手机号是否有注册过，如果没有注册过，则执行以下一句
@@ -226,7 +199,6 @@
                 changeCaptcha();
                 return false;
             }
-
         }
 
         function check_pwd($pwd) {
@@ -242,7 +214,6 @@
                 changeCaptcha();
                 return false;
             }
-
         }
 
         var $username = $("#username");
@@ -259,9 +230,6 @@
         }
 
         //session失效时，父窗口跳转至登录页面
-        /*if($('#iframe', parent.document).attr("name") == 'iframe'){
-            window.parent.location.href = "${base}/login.html";
-        }*/
         var _topWin = window;
         while (_topWin != _topWin.parent.window) {
             _topWin = _topWin.parent.window;
@@ -285,21 +253,7 @@
 
     // 更换验证码
     function changeCaptcha() {
-    }
-    //弹窗登录
-    function model(el){
-        var $el = $(el);
-        if($el.is(':visible')){
-            $('.content').show();
-            $el.hide();
-        }else{
-            $('.content').hide();
-            $el.fadeIn();
-        }
-    }
-    // 更换验证码
-    function changeCaptcha() {
-        $("#captchaImage").attr("src", "${base}/common/captcha.html?captchaId=${captchaId}&timestamp=" + (new Date()).valueOf());
+        $("#captchaImage").attr("src", "${base}/common/captcha.html?captchaId=${captchaId}");
     }
 </script>
 </html>
