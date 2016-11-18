@@ -42,4 +42,9 @@ public class ApPrincipal implements Serializable {
     public void setRealName(String realName) {
         this.realName = realName;
     }
+
+    @Override
+    public String toString() {
+        return realName;
+    }
 }
